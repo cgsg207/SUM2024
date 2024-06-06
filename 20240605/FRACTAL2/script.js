@@ -31,16 +31,18 @@ export function initGL() {
   {
     vec2 Z = DrawPos.xy;
     vec2 Z0 = Z;
-    vec2 C = vec2(0.30 + 0.47 * sin(Time), 0.8);
+    vec2 C = vec2(sin(Time * 0.5) * 0.47 - 0.3 , 0.47 * cos(Time * 0.5));
+    vec2 D = vec2(cos(Time * 0.5) * 0.47 - 0.3 , 0.47 * sin(Time * 0.5));
+    vec2 E = vec2(sin(Time * 0.5) / cos(Time * 0.5) * 0.47 - 0.3 , 0.47 * cos(Time * 0.5) / sin(Time * 0.5));
     float n = 0.0;
 
-    while (n < 100.0 && length(Z) < 2.0)
+    while (n < 100.0 && length(Z) < 2.25)
     {
-      Z = vec2(Z.x * Z.x - Z.y * Z.y, 2.0 * Z.y * Z.x) + C;
+      Z = vec2(Z.x * Z.x  - Z.y * Z.y, 2.0 * Z.y * Z.x) + C * D * E;
       n++;
     }
 
-    OutColor = vec4(DrawPos, 0.0, 1.0) * 0.5;
+    OutColor = vec4(DrawPos * 0.2, 1.7, 3.0) * 3.03;
     OutColor.g = n / 100.0;
   }
   `;
