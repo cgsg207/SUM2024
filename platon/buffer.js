@@ -25,7 +25,7 @@ class _ubo_buffer extends _buffer {
       shd == undefined ||
       shd.id == undefined ||
       shd.uniformBlocks[this.name] == undefined
-    )
+    ) 
       return;
     gl.uniformBlockBinding(
       shd.id,

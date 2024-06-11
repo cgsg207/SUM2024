@@ -1,5 +1,7 @@
 import { mat4 } from "./mat4.js";
 import { vec3 } from "./vec3.js";
+import { Cam } from "./camera.js";
+import {render} from "./render.js"
 
 let canvas, gl, timeLoc;
 
@@ -9,22 +11,7 @@ export function initGL() {
   gl = canvas.getContext("webgl2");
   gl.clearColor(0.3, 0.47, 0.8, 1);
 
-  // Vertex buffer creation
-  const size = 0.8;
-  const vertexes = [
-    -size,
-    size,
-    0,
-    -size,
-    -size,
-    0,
-    size,
-    size,
-    0,
-    size,
-    -size,
-    0,
-  ];
+  
   const posLoc = gl.getAttribLocation(prg, "InPosition");
   let vertexArray = gl.createVertexArray();
   gl.bindVertexArray(vertexArray);
@@ -42,33 +29,17 @@ export function initGL() {
   gl.useProgram(prg);
 } // End of 'initGL' function
 
-// Load and compile shader function
-function loadShader(shaderType, shaderSource) {
-  const shader = gl.createShader(shaderType);
-  gl.shaderSource(shader, shaderSource);
-  gl.compileShader(shader);
-  if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-    let buf = gl.getShaderInfoLog(shader);
-    console.log("Shader compile fail: " + buf);
+function myOnLoad() {
+  let canvas = document.getElementById("myCan");
+  let prg;
+  const rnd = render(canvas, (rnd) => {
+    prg = rnd.CreatePrim({vec3(0),
+      vec3(1, 0, 0),
+      vec3(0, 1, 0)});
+  });
+  rnd.loop((rnd) => {
+    rnd.Cam.CamSet(vec3(8), vec3(0), vec3(0, 1, 0));
+    prg.transpose(mat4.RotateY(rnd.)
   }
-  return shader;
-} // End of 'loadShader' function
-
-let x = 1;
-
-// Main render frame function
-export function render() {
-  // console.log(`Frame ${x++}`);
-  gl.clear(gl.COLOR_BUFFER_BIT);
-
-  if (timeLoc != -1) {
-    const date = new Date();
-    let t =
-      date.getMinutes() * 60 +
-      date.getSeconds() +
-      date.getMilliseconds() / 1000;
-
-    gl.uniform1f(timeLoc, t);
-  }
-  gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
-} // End of 'render' function
+  )
+}
