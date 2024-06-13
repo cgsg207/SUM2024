@@ -33,13 +33,11 @@ function myOnLoad() {
   let canvas = document.getElementById("myCan");
   let prg;
   const rnd = render(canvas, (rnd) => {
-    prg = rnd.CreatePrim({vec3(0),
-      vec3(1, 0, 0),
-      vec3(0, 1, 0)});
+    prg = rnd.CreatePrim({});
   });
   rnd.loop((rnd) => {
     rnd.Cam.CamSet(vec3(8), vec3(0), vec3(0, 1, 0));
-    prg.transpose(mat4.RotateY(rnd.)
+    prg.transpose(mat4.RotateY()
   }
   )
 }

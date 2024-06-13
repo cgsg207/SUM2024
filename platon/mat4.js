@@ -33,7 +33,7 @@ class _mat4 {
    [m.m[3][0], m.m[3][1], m.m[3][2], m.m[3][3]]
   );
  }
- mulmatr(m) {
+ mulmatr(m1, m2) {
   return mat4(
    [
     m1.m[0][0] * m2.m[0][0] +
@@ -190,15 +190,15 @@ class _mat4 {
  } // End of 'MatrFrustum' function
 
  view(At, Up1) {
-  let Dir = At.subvec(Loc).normalize(),
-   Right = Dir.cross(Up1).normalize(),
-   Up = Right.cross(Dir);
+  let Dir = vec3.normolize(vec3.subvec(At, Loc)),//At.subvec(Loc).normalize(),
+   Right = vec3.normalize(vec3.cross(Dir, Up1)),//Dir.cross(Up1).normalize(),
+   Up = vec3.cross(Right, Dir);//Right.cross(Dir);
 
   return mat4(
    [Right.x, Up.x, -Dir.x, 0],
    [Right.y, Up.y, -Dir.y, 0],
    [Right.z, Up.z, -Dir.z, 0],
-   [-Loc.dot(Right), -Loc.dot(Up), Loc.dot(Dir), 1]
+   [vec3.dot(-Loc, Right), vec3.dot(Up, -Loc), vce3.dot(Dir, Loc), 1]
   );
  }
 
