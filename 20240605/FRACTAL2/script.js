@@ -29,7 +29,7 @@ export function initGL() {
  
   void main( void )
   {
-    vec2 Z = DrawPos;
+    vec2 Z = DrawPos * 1.5;
     vec2 Z0 = Z, C = vec2(0.35 * sin(Time * 0.5) + 0.07, 0.38);
     float n = 0.0;
     
@@ -42,10 +42,10 @@ export function initGL() {
     OutColor = vec4(DrawPos, 0.4, 1.0) + 0.5;
     OutColor.r = n / 255.0 * sin(Time);
     OutColor.g = n / 255.0;
-    OutColor.b = n / 255.0;
+    OutColor.b = n / 255.0 * sin(Time * 1.5);
     
 
-    OutColor = OutColor;
+    OutColor = OutColor + vec4(0.6, 0.7, 1.0, 1.0);
   }
   `;
   // vec2 C = vec2(sin(Time * 1.2) * 0.05 + 0.3 , 0.05 * sin(Time * 0.5) + 0.3);
@@ -54,17 +54,6 @@ export function initGL() {
   // OutColor = vec4(DrawPos, 1.7, 1.3) * 2.5;
   // vec2(0.35 + 0.05 * sin(Time * 1.3), 0.35 + 0.05 * sin(Time * 0.8));
 
-  // vec2 Z = DrawPos;
-  //   vec2 Z0 = Z;
-
-  //   vec2 F = vec2(sin(Time * 0.5) * 0.47 - 0.3, sin(Time * 0.5) * 0.47 + 0.3);
-  //   float n = 0.0;
-
-  //   while (n < 100.0 && length(Z) < 2.0)
-  //   {
-  //     Z = vec2(Z.x * Z.x  - Z.y * Z.y, 6.0 * Z.y * Z.x) + Z0;
-  //     n++;
-  //   }
   let vs = loadShader(gl.VERTEX_SHADER, vs_txt),
     fs = loadShader(gl.FRAGMENT_SHADER, fs_txt),
     prg = gl.createProgram();
