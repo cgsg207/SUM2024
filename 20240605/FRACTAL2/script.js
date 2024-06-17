@@ -29,23 +29,42 @@ export function initGL() {
  
   void main( void )
   {
-    vec2 Z = DrawPos.xy;
-    vec2 Z0 = Z;
-    vec2 C = vec2(sin(Time * 0.5) * 0.47 - 0.3 , 0.47 * cos(Time * 0.5));
-    vec2 D = vec2(cos(Time * 0.5) * 0.47 - 0.3 , 0.47 * sin(Time * 0.5));
-    vec2 E = vec2(sin(Time * 0.5) / cos(Time * 0.5) * 0.47 - 0.3 , 0.47 * cos(Time * 0.5) / sin(Time * 0.5));
+    vec2 Z = DrawPos;
+    vec2 Z0 = Z, C = vec2(0.35 * sin(Time * 0.5) + 0.07, 0.38);
     float n = 0.0;
-
-    while (n < 255.0 && length(Z) < 2.0)
+    
+    while (n < 500.0 && length(Z) < 2.0)
     {
-      Z = vec2(Z.x * Z.x  - Z.y * Z.y, 8.0 * Z.y * Z.x) + C * D / E;
+      Z = vec2(Z.x * Z.x - Z.y * Z.y, 2.0 * Z.x * Z.y) + C;
       n++;
     }
 
-    OutColor = vec4(DrawPos * 0.001, 1.7, 5.0) * 5.30;
+    OutColor = vec4(DrawPos, 0.4, 1.0) + 0.5;
+    OutColor.r = n / 255.0 * sin(Time);
     OutColor.g = n / 255.0;
+    OutColor.b = n / 255.0;
+    
+
+    OutColor = OutColor;
   }
   `;
+  // vec2 C = vec2(sin(Time * 1.2) * 0.05 + 0.3 , 0.05 * sin(Time * 0.5) + 0.3);
+  //   vec2 D = vec2(cos(Time * 0.5) * 0.47 - 0.3 , 0.47 * sin(Time * 0.5));
+  //   vec2 E = vec2(sin(Time * 0.5) / cos(Time * 0.5) * 0.47 - 0.3 , 0.47 * cos(Time * 0.5) / sin(Time * 0.5));
+  // OutColor = vec4(DrawPos, 1.7, 1.3) * 2.5;
+  // vec2(0.35 + 0.05 * sin(Time * 1.3), 0.35 + 0.05 * sin(Time * 0.8));
+
+  // vec2 Z = DrawPos;
+  //   vec2 Z0 = Z;
+
+  //   vec2 F = vec2(sin(Time * 0.5) * 0.47 - 0.3, sin(Time * 0.5) * 0.47 + 0.3);
+  //   float n = 0.0;
+
+  //   while (n < 100.0 && length(Z) < 2.0)
+  //   {
+  //     Z = vec2(Z.x * Z.x  - Z.y * Z.y, 6.0 * Z.y * Z.x) + Z0;
+  //     n++;
+  //   }
   let vs = loadShader(gl.VERTEX_SHADER, vs_txt),
     fs = loadShader(gl.FRAGMENT_SHADER, fs_txt),
     prg = gl.createProgram();
@@ -121,4 +140,4 @@ export function render() {
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 } // End of 'render' function
 
-console.log("CGSG forever!!! script.js imported");
+console.log("FRACTAL");
