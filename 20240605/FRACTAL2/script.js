@@ -1,8 +1,32 @@
+import { green } from "color-name";
+
 let canvas, gl, timeLoc;
+
+let r = 1.0;
+let g = 1.0;
+let b = 1.0;
+let timer;
+
+function keyboard(event) {
+  if (event.key == "p") {
+    timer.isPause = !timer.isPause;
+  }
+  if (event.key == "c") {
+    r = 0.6;
+    g = 0.6;
+    b = 0.6;
+  }
+}
 
 // OpenGL initialization function
 export function initGL() {
   canvas = document.getElementById("myCan");
+  // body = document.getElementById("body");
+
+  canvas.addEventListener("keypress", keyboard);
+
+  timer = new Timer();
+
   gl = canvas.getContext("webgl2");
   gl.clearColor(0.3, 0.47, 0.8, 1);
 
@@ -10,9 +34,12 @@ export function initGL() {
   let vs_txt = `#version 300 es
   precision highp float;
   in vec3 InPosition;
-    
+       
   out vec2 DrawPos;
   uniform float Time;
+  uniform float r;
+  uniform float g;
+  uniform float b;
  
   void main( void )
   {
@@ -26,6 +53,9 @@ export function initGL() {
   
     in vec2 DrawPos;
     uniform float Time;
+    uniform float r;
+    uniform float g;
+    uniform float b;
  
   void main( void )
   {
@@ -42,17 +72,10 @@ export function initGL() {
     OutColor = vec4(DrawPos, 0.4, 1.0) + 0.5;
     OutColor.r = n / 255.0 * sin(Time);
     OutColor.g = n / 255.0;
-    OutColor.b = n / 255.0 * sin(Time * 1.5);
+    OutColor.b = n / 255.0;
     
-
-    OutColor = OutColor + vec4(0.6, 0.7, 1.0, 1.0);
-  }
-  `;
-  // vec2 C = vec2(sin(Time * 1.2) * 0.05 + 0.3 , 0.05 * sin(Time * 0.5) + 0.3);
-  //   vec2 D = vec2(cos(Time * 0.5) * 0.47 - 0.3 , 0.47 * sin(Time * 0.5));
-  //   vec2 E = vec2(sin(Time * 0.5) / cos(Time * 0.5) * 0.47 - 0.3 , 0.47 * cos(Time * 0.5) / sin(Time * 0.5));
-  // OutColor = vec4(DrawPos, 1.7, 1.3) * 2.5;
-  // vec2(0.35 + 0.05 * sin(Time * 1.3), 0.35 + 0.05 * sin(Time * 0.8));
+    OutColor = OutColor + vec4(r, g, b, 1.0);
+  }`;
 
   let vs = loadShader(gl.VERTEX_SHADER, vs_txt),
     fs = loadShader(gl.FRAGMENT_SHADER, fs_txt),
@@ -94,6 +117,11 @@ export function initGL() {
 
   // Uniform data
   timeLoc = gl.getUniformLocation(prg, "Time");
+  redLoc = gl.getUniformLocation(prg, "r");
+  greenLoc = gl.getUniformLocation(prg, "g");
+  blueLoc = gl.getUniformLocation(prg, "b");
+
+  // rgb = gl.getUniformLocation(prg, "color");
 
   gl.useProgram(prg);
 } // End of 'initGL' function
@@ -118,15 +146,72 @@ export function render() {
   gl.clear(gl.COLOR_BUFFER_BIT);
 
   if (timeLoc != -1) {
-    const date = new Date();
-    let t =
-      date.getMinutes() * 60 +
-      date.getSeconds() +
-      date.getMilliseconds() / 1000;
+    timer.response();
+    gl.uniform1f(timeLoc, timer.localTime);
+  }
 
-    gl.uniform1f(timeLoc, t);
+  if (redLoc != -1) {
+    gl.uniform1f(redLoc, r);
+  }
+  if (greenLoc != -1) {
+    gl.uniform1f(greenLoc, g);
+  }
+  if (blueLoc != -1) {
+    gl.uniform1f(blueLoc, b);
   }
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 } // End of 'render' function
+
+export function Timer() {
+  const getTime = () => {
+    const date = new Date();
+    let t =
+      date.getMilliseconds() / 1000.0 +
+      date.getSeconds() +
+      date.getMinutes() * 60;
+    return t;
+  };
+
+  this.response = (tag_id = null) => {
+    let t = getTime();
+    // Global time
+    this.globalTime = t;
+    this.globalDeltaTime = t - this.oldTime;
+    // Time with pause
+    if (this.isPause) {
+      this.localDeltaTime = 0;
+      this.pauseTime += t - this.oldTime;
+    } else {
+      this.localDeltaTime = this.globalDeltaTime;
+      this.localTime = t - this.pauseTime - this.startTime;
+    }
+    // FPS
+    this.frameCounter++;
+    if (t - this.oldTimeFPS > 3) {
+      this.FPS = this.frameCounter / (t - this.oldTimeFPS);
+      this.oldTimeFPS = t;
+      this.frameCounter = 0;
+      if (tag_id != null)
+        document.getElementById(tag_id).innerHTML = this.getFPS();
+    }
+    this.oldTime = t;
+  };
+
+  // Obtain FPS as string method
+  this.getFPS = () => this.FPS.toFixed(3);
+
+  // Fill timer global data
+  this.globalTime = this.localTime = getTime();
+  this.globalDeltaTime = this.localDeltaTime = 0;
+
+  // Fill timer semi global data
+  this.startTime = this.oldTime = this.oldTimeFPS = this.globalTime;
+  this.frameCounter = 0;
+  this.isPause = false;
+  this.FPS = 30.0;
+  this.pauseTime = 0;
+
+  return this;
+} // End of 'Timer' function
 
 console.log("FRACTAL");
