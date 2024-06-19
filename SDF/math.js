@@ -4,41 +4,65 @@
  * PURPOSE    :
  */
 
-let infinity = 100000;
-let porables_vertexes = [];
+let inf = 100000;
+let vert = [];
+let inter = [];
 
 /* Find intection */
-function intection(x1, y1, x2, y2) {
+function intection(v1, v2) {
   let s;
 
-  s = ((y1 + x1 * x1 - (y2 + x2 * x2)) / 2) * (x1 - x2);
+  s = (v1.y + v1.x * v1.x - (v2.y + v2.x * v2.x)) / (2 * v1.x - 2 * v2.x);
   return s;
 }
 
 /* Marching porables */
 function marchP() {
   let i;
-  for (i = 0; i < porables.length; i++) {
-    //
+}
+
+function BottomlinePorables(array) {
+  let k;
+
+  vert[0] = vec2();
+  for (k = 0; k < array.lenth; k++) {
+    let z = vec2(i, array[i]);
   }
 }
+
+// def find_hull_parabolas(single_row, hull_vertices, hull_intersections):
+//     d = single_row
+//     v = hull_vertices
+//     z = hull_intersections
+//     k = 0
+//     v[0].x = 0
+//     z[0].x = -INF
+//     z[1].x = +INF
+//     for i in range(1, len(d)):
+//         q = (i, d[i])
+//         p = v[k]
+//         s = intersect_parabolas(p, q)
+//         while s.x <= z[k].x:
+//             k = k - 1
+//             p = v[k]
+//             s = intersect_parabolas(p, q)
+//         k = k + 1
+//         v[k] = q
+//         z[k].x = s.x
+//         z[k + 1].x = +INF
 
 /* Transpose image */
 function transpose(img) {}
 
 /* go by hieght */
-function stepHeight() {}
+function stepWidth() {}
 
 /* Result function */
 export function result() {
   let i;
   // ....
-  for (i = 0; i < img.width; i++) {
-    transpose(img);
-  }
+  transpose(img);
 
   //...
-  for (i = 0; i < img.width; i++) {
-    transpose(img);
-  }
+  transpose(img);
 }
