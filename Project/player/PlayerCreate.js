@@ -1,3 +1,5 @@
+/* Coords which free for ships */
+let freePlace = [];
 /* For 1 point ships */
 let Ships1 = [];
 /* For 2 points ships */
@@ -12,6 +14,20 @@ let Ship4 = [];
 let coords = [[], [], [], []];
 
 let array = [];
+
+/* Create empty field.
+ * ARGUMENTS: None.
+ * RETURNS: None.
+ */
+function FreePlace() {
+  let i, j;
+
+  for (i = 0; i < 10; i++) {
+    for (j = 0; i < 10; j++) {
+      freePlace[i][j] = true;
+    }
+  }
+} /* End of "FreePlace" function */
 
 function CreateShipPlace(array) {
   let type = array.length;
@@ -67,3 +83,46 @@ export function PlayerStart() {
   }
   DrawShips(coords);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+function CheckInput(xc, yc) {
+  if (freePlace[xc][yc] == false)
+    console.log("Error: ship already theer");
+  if ()
+} 
+
+
+
+
+
+
+function CheckCoords(xc, yc) {
+
+}
+
+
+
+
+
+
