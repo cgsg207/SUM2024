@@ -1,0 +1,68 @@
+/* Create empty field.
+ * ARGUMENTS: None.
+ * RETURNS: None.
+ */
+// function FreePlace() {
+//   let i, j;
+
+//   for (i = 0; i < 10; i++) {
+//     for (j = 0; i < 10; j++) {
+//       freePlace[i][j] = true;
+//     }
+//   }
+// } /* End of "FreePlace" function */
+
+// function CreateShipPlace(array) {
+//   let type = array.length;
+
+//   if (type == 1 && Ships1.length < 4) {
+//     Ships1.push[array];
+
+//     coords[0].push[array];
+//   } else if (type == 2 && Ships2.length < 3) {
+//     Ships2[len2][0] = array[0];
+//     Ships2[len2][1] = array[1];
+
+//     coords[1].push[array[0]];
+//     coords[1].push[array[1]];
+//     len2++;
+//   } else if (type == 3 && Ships3.length < 2) {
+//     Ships3[len3][0] = array[0];
+//     Ships3[len3][1] = array[1];
+//     Ships3[len3][1] = array[2];
+
+//     coords[2].push[array[0]];
+//     coords[2].push[array[1]];
+//     coords[2].push[array[2]];
+//     len3++;
+//   } else if (type == 4 && Ship4.length < 1) {
+//     Ship4[0] = array[0];
+//     Ship4[1] = array[1];
+//     Ship4[2] = array[2];
+//     Ship4[3] = array[3];
+
+//     coords[3].push[array[0]];
+//     coords[3].push[array[1]];
+//     coords[3].push[array[2]];
+//     coords[3].push[array[3]];
+//   } else {
+//     console.log("Error: not enough place for %d type", array.length);
+//   }
+// }
+
+// function ReadCoords() {
+//   /*...*/
+//   for (i = 0; i < f; i++) array[0] = ChangeCoords(array[0].x, array[0].y);
+// }
+
+// function DrawShips(coords) {}
+
+// export function PlayerStart() {
+//   let array = [];
+
+//   while (Ships1.length != 4 && len2 != 3 && len3 != 2 && Ships4.length != 1) {
+//     ReadCoords();
+//     CreateShipPlace(array);
+//   }
+//   DrawShips(coords);
+// }

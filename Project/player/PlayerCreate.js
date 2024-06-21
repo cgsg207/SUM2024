@@ -1,7 +1,14 @@
+/* FILE NAME  : AICreate.js
+ * PROGRAMMER : AN5
+ * LAST UPDATE: 21.06.2024
+ * PURPOSE    : Create and change ships for Player.
+ */
+
 /* Coords which free for ships */
-let freePlace = [];
+let freePlacePlayer = [[]];
 /* For 1 point ships */
 let Ships1 = [];
+let len1 = 0;
 /* For 2 points ships */
 let Ships2 = [[], [], []];
 let len2 = 0;
@@ -11,11 +18,19 @@ let len3 = 0;
 /* For 4 point ship */
 let Ship4 = [];
 /* All ships coords array */
-let coords = [[], [], [], []];
-
+let coordsPlayer = [[], [], [], []];
 let array = [];
 
-/* Create empty field.
+/* Start game by player function.
+ * ARGUMENTS: None.
+ * RETURNS: None.
+ */
+function PlayerStart() {
+  freePlacePlayer();
+  AddPlayersShips();
+} /* End of "PlayerStart" function */
+
+/* Fill "freePlace" array function.
  * ARGUMENTS: None.
  * RETURNS: None.
  */
@@ -24,105 +39,147 @@ function FreePlace() {
 
   for (i = 0; i < 10; i++) {
     for (j = 0; i < 10; j++) {
-      freePlace[i][j] = true;
+      freePlacePlayer[i][j] = true;
     }
   }
 } /* End of "FreePlace" function */
 
-function CreateShipPlace(array) {
-  let type = array.length;
+/* Add boat`s coordinates function.
+ * ARGUMENTS: None.
+ * RETURNS: None.
+ */
+function AddPlayersShips() {
+  // это для одного корабля
+  ReadCoords();
+  CreateShips();
+  array.length = 0;
+  if (ListenMesChange()) ChangeShips();
+} /* End of "AddPlayersShips" function*/
+
+/* Create arrays with ship`s coordinates function.
+ * ARGUMENTS: None.
+ * RETURNS: None.
+ */
+function CreateShips() {
+  let type = array.length,
+    i;
 
   if (type == 1 && Ships1.length < 4) {
-    Ships1.push[array];
+    Ships1.push(array[0]);
+    freePlacePlayer[array[0].y][array[0].x] = false;
+    coordsPlayer[0].push(array[0]);
+    len1++;
+  }
 
-    coords[0].push[array];
-  } else if (type == 2 && Ships2.length < 3) {
-    Ships2[len2][0] = array[0];
-    Ships2[len2][1] = array[1];
-
-    coords[1].push[array[0]];
-    coords[1].push[array[1]];
+  if (type == 2 && Ships2.length < 3) {
+    for (i = 0; i < array.length; i++) {
+      Ships2[len2].push(array[i]);
+      freePlacePlayer[array[i].y][array[i].x] = false;
+      coordsPlayer[1].push(array[i]);
+    }
     len2++;
-  } else if (type == 3 && Ships3.length < 2) {
-    Ships3[len3][0] = array[0];
-    Ships3[len3][1] = array[1];
-    Ships3[len3][1] = array[2];
+  }
 
-    coords[2].push[array[0]];
-    coords[2].push[array[1]];
-    coords[2].push[array[2]];
+  if (type == 3 && Ships3.length < 3) {
+    for (i = 0; i < array.length; i++) {
+      Ships3[len3].push(array[i]);
+      freePlacePlayer[array[i].y][array[i].x] = false;
+      coordsPlayer[2].push(array[i]);
+    }
     len3++;
-  } else if (type == 4 && Ship4.length < 1) {
-    Ship4[0] = array[0];
-    Ship4[1] = array[1];
-    Ship4[2] = array[2];
-    Ship4[3] = array[3];
-
-    coords[3].push[array[0]];
-    coords[3].push[array[1]];
-    coords[3].push[array[2]];
-    coords[3].push[array[3]];
-  } else {
-    console.log("Error: not enough place for %d type", array.length);
   }
-}
 
+  if (type == 4 && Ship4.length < 4) {
+    for (i = 0; i < array.length; i++) {
+      Ship4.push(array[i]);
+      freePlacePlayer[array[i].y][array[i].x] = false;
+      coordsPlayer[3].push(array[i]);
+    }
+  }
+} /* End of "CreateShips" function */
+
+/* Read coordinates from player function.
+ * ARGUMENTS: None/
+ * RETURNS: None.
+ */
 function ReadCoords() {
-  /*...*/
-  for (i = 0; i < f; i++) array[0] = ChangeCoords(array[0].x, array[0].y);
-}
+  let coord, i, g;
 
-function DrawShips(coords) {}
-
-export function PlayerStart() {
-  let array = [];
-
-  while (Ships1.length != 4 && len2 != 3 && len3 != 2 && Ships4.length != 1) {
-    ReadCoords();
-    CreateShipPlace(array);
+  while (array.length < 4 || ListenMes()) {
+    coord = ListenCoords();
+    if (
+      freePlacePlayer[coord.y - 1][coord.x - 1] == false ||
+      freePlacePlayer[coord.y - 1][coord.x] == false ||
+      freePlacePlayer[coord.y - 1][coord.x + 1] == false ||
+      freePlacePlayer[coord.y][coord.x - 1] == false ||
+      freePlacePlayer[coord.y][coord.x] == false ||
+      freePlacePlayer[coord.y][coord.x + 1] == false ||
+      freePlacePlayer[coord.y + 1][coord.x - 1] == false ||
+      freePlacePlayer[coord.y + 1][coord.x] == false ||
+      freePlacePlayer[coord.y + 1][coord.x + 1] == false
+    ) {
+      console.log(
+        "You already have ship in this coordinates or in the near by coordinates",
+      );
+      continue;
+    } else {
+      for (i = 0; i < array.length; i++) {
+        if (
+          (coord.x == array[i].x + 1 || coord.x == array[i].x - 1) &&
+          (coord.y == array[i].y + 1 || coord.y == array[i].y - 1)
+        ) {
+          console.log("You can`t install ships diagonally");
+          break;
+        } else {
+          array.push[coord];
+        }
+      }
+    }
   }
-  DrawShips(coords);
-}
+} /*End of "ReadCoords" function */
 
+/***
+ Change ship`s coordinates module 
+ ***/
 
+/* Change ships coords function.
+ * ARGUMENTS: None.
+ * RETURNS: None.
+ */
+function ChangeShips() {
+  let count = DelCount();
 
+  while (count > 0) {
+    SelectShips();
+    DelShips();
+  }
+} /* End of "ChangeShips" function */
 
+/* Change ships coords function.
+ * ARGUMENTS:
+ *   - coordinates of ship:
+ *       let pos(vec2);
+ * RETURNS:
+ *   - (let) position in array of all coords;
+ */
+function FindShip(pos) {
+  let i, j;
 
+  for (i = 0; i < coordsPlayer.length; i++) {
+    for (j = 0; j < coordsPlayer[i].length; j++) {
+      if (coordsPlayer[i][j].x == pos.x && coordsPlayer[i][j].y == pos.y)
+        return i;
+    }
+  }
+} /* End of "FindShip" function */
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-function CheckInput(xc, yc) {
-  if (freePlace[xc][yc] == false)
-    console.log("Error: ship already theer");
-  if ()
-} 
-
-
-
-
-
-
-function CheckCoords(xc, yc) {
-
-}
-
-
-
-
-
-
+/* Change ships coords function.
+ * ARGUMENTS:
+ *   - type of ship:
+ *       let type;
+ * RETURNS:
+ *   - (let) position in array of all coords;
+ */
+function CreateNewPosition(type, pos) {
+  let i, j, del;
+} /* End of "ChangeShipPosition" function */

@@ -1,10 +1,10 @@
 /* FILE NAME  : AICreate.js
  * PROGRAMMER : AN5
- * LAST UPDATE: 20.06.2024
+ * LAST UPDATE: 21.06.2024
  * PURPOSE    : Create ships for AI.
  */
-/* Coords which free for ships */
 
+/* Coords which free for ships */
 let freePlace = [];
 /* For 1 point ships */
 let Ships1AI = [];
@@ -133,7 +133,7 @@ function CreateCoords2(xc, yc, num) {
     freePlace[Ships2AI[len2AI][i].y][Ships2AI[len2AI][i].x] = false;
 
   /* Add ship`s coords to global array */
-  for (i = 0; i < 3; i++) coordsAI[2].push[Ships2AI[len2AI][i]];
+  for (i = 0; i < 3; i++) coordsAI[2].push(Ships2AI[len2AI][i]);
 } /* End of "CreateCoords3" function */
 
 /* Add cruiser`s coordinates function.
@@ -175,7 +175,7 @@ function CreateCoords3(xc, yc, num) {
     freePlace[Ships3AI[len3AI][i].y][Ships3AI[len3AI][i].x] = false;
 
   /* Add ship`s coords to global array */
-  for (i = 0; i < 3; i++) coordsAI[2].push[Ships3AI[len3AI][i]];
+  for (i = 0; i < 3; i++) coordsAI[2].push(Ships3AI[len3AI][i]);
 } /* End of "CreateCoords3" function */
 
 /* Add aircraft-carrier`s coordinates function.
@@ -251,10 +251,10 @@ function CreateShips() {
 
     if (freePlace[yc][xc] == true) {
       CheckPlace(xc, yc, 4);
-      if (array[0] == 1) mas.push[array[0]];
-      else if (array[1] == 2) mas.push[array[1]];
-      else if (array[2] == 3) mas.push[array[2]];
-      else if (array[3] == 4) mas.push[array[3]];
+      if (array[0] == 1) mas.push(array[0]);
+      else if (array[1] == 2) mas.push(array[1]);
+      else if (array[2] == 3) mas.push(array[2]);
+      else if (array[3] == 4) mas.push(array[3]);
 
       num = Math.random() * (mas.length + 1);
       CreateCoords4(xc, yc, mas[num]);
@@ -268,10 +268,10 @@ function CreateShips() {
 
     if (freePlace[yc][xc] == true) {
       CheckPlace(xc, yc, 3);
-      if (array[0] == 1) mas.push[array[0]];
-      else if (array[1] == 2) mas.push[array[1]];
-      else if (array[2] == 3) mas.push[array[2]];
-      else if (array[3] == 4) mas.push[array[3]];
+      if (array[0] == 1) mas.push(array[0]);
+      else if (array[1] == 2) mas.push(array[1]);
+      else if (array[2] == 3) mas.push(array[2]);
+      else if (array[3] == 4) mas.push(array[3]);
 
       num = Math.random() * (mas.length + 1);
       CreateCoords3(xc, yc, mas[num]);
@@ -286,10 +286,10 @@ function CreateShips() {
 
     if (freePlace[yc][xc] == true) {
       CheckPlace(xc, yc, 2);
-      if (array[0] == 1) mas.push[array[0]];
-      else if (array[1] == 2) mas.push[array[1]];
-      else if (array[2] == 3) mas.push[array[2]];
-      else if (array[3] == 4) mas.push[array[3]];
+      if (array[0] == 1) mas.push(array[0]);
+      else if (array[1] == 2) mas.push(array[1]);
+      else if (array[2] == 3) mas.push(array[2]);
+      else if (array[3] == 4) mas.push(array[3]);
 
       num = Math.random() * (mas.length + 1);
       CreateCoords2(xc, yc, mas[num]);
