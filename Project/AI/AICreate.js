@@ -318,4 +318,4 @@ function CreateShips() {
 export function AIStart() {
   FreePlace();
   CreateShips();
-} /* End of "AIStart" function */
+    } /* End of "AIStart" function */
