@@ -1,77 +1,78 @@
-/* Array of damaged ships */
-let DamageShips = [];
+/* Array of player steps */
+let Steps = [[]];
 
-/* Players step function */
-// function PlayerStep(position) {
-//   let i;
-//   let j;
-//   let aim = false;
+function CreateSteps() {
+  let i, j;
 
-//   for (i = 0; i < coords.length; i++) {
-//     for (j = 0; j < coords[i].length; j++) {
-//       if (coords[i][j].x == position.x && coords[i][j].y == position.y) {
-//         aim = FindDamage(i, position);
-//       }
-//       if (aim == true) return true;
-//     }
-//   }
-// }
-
-// /* Find damaged ship function */
-// function FindDamage(type, position) {
-//   let i, j;
-
-//   if (type == 0) {
-//     for (i = 0; i < Ships1.length; i++) {
-//       if (Ships1[i].x == position.x && Ships1[i].y == position.y) {
-//         console.log(`Damaged ship: Ship:1: %d`, i);
-//         DamageShips.push[Ships1[i]];
-//         //delete element from Ships.. and coords
-//         return true;
-//       }
-//     }
-//   }
-//   if (type == 1) {
-//     for (i = 0; i < Ships2.length; i++) {
-//       for (j = 0; j < 2; j++) {
-//         if (Ships2[i][j].x == position.x && Ships2[i][j].y == position.y) {
-//           console.log(`Damaged ship: Ship:2: %d`, i);
-//           DamageShips.push[Ships2[i][j]];
-//           //delete element from Ships.. and coords
-//           return true;
-//         }
-//       }
-//     }
-//   }
-//   if (type == 2) {
-//     for (i = 0; i < Ships3.length; i++) {
-//       for (j = 0; j < 3; j++) {
-//         if (Ships2[i][j].x == position.x && Ships2[i][j].y == position.y) {
-//           console.log(`Damaged ship: Ship:3: %d`, i);
-//           DamageShips.push[Ships3[i][j]];
-//           //delete element from Ships.. and coords
-//           return true;
-//         }
-//       }
-//     }
-//   }
-//   if (type == 3) {
-//     for (i = 0; i < Ships4.length; i++) {
-//       if (Ships4[i].x == position.x && Ships4[i].y == position.y) {
-//         console.log(`Damaged ship: Ship:4: %d`, i);
-//         DamageShips.push[Ships1[i]];
-//         //delete element from Ships.. and coords
-//         return true;
-//       }
-//     }
-//   } else {
-//     console.log("Water");
-//     return false;
-//   }
-// }
+  for (i = 0; i < 10; i++) {
+    for (j = 0; j < 10; j++) {
+      Step[i][j] = false;
+    }
+  }
+}
 
 /* Player step function.
  * ARGUMENTS: None.
  * RETURNS: None.
  */
-function PlayerStep() {} /* End of "PlayerStep" function */
+function PlayerStep() {
+  let pos;
+  pos = ReadCoords();
+
+  if (freePlaceAI[pos.y][pos.x] == false && Steps[pos.y][pos.x] == false) {
+    let sc = FindAIShip(pos);
+
+    DelFromArray(sc, pos);
+    return true;
+  } else {
+    return false;
+  }
+} /* End of "PlayerStep" function */
+
+function FindAIShip(pos) {
+  let i, j;
+
+  for (i = 0; i < coordsPlayer.length; i++) {
+    for (j = 0; j < coordsPlayer[i].length; j++) {
+      if (coordsPlayer[i][j] == pos) {
+        return vec2(j, i);
+      }
+    }
+  }
+}
+
+function DelFromArray(sc, pos) {
+  Swap(coordsAI[sc.y][sc.x], coordsAI[sc.y][0]);
+  coordsAI[sc.y].shift();
+
+  if (sc.y == 0) {
+    Swap(Ships1AI[sc.x], Ships1[0]);
+    Ships1.shift();
+    sinked++;
+  }
+  if (sc.x == 3) {
+    Swap(Ship4AI[sc.x], Ship4AI[0]);
+    Ship4AI.shift();
+    if (Ship4.length == 0) {
+      sinked++;
+    }
+  }
+  if (sc.x == 1) {
+    let num = sc.y / 2;
+    let c = sc.y % 2;
+
+    Swap(Ships2AI[num][c], Ships2AI[num][0]);
+    if (Ships2AI[num].lenth == 1) sinked++;
+    Ships2AI[num].shift();
+  }
+  if (sc.x == 2) {
+    let num = sc.y / 3;
+    let c = sc.y % 3;
+
+    Swap(Ships3AI[num][c], Ships3AI[num][0]);
+    if (Ships2AI[num].lenth == 1) sinked++;
+    Ships3AI[num].shift();
+  }
+  freePlaceAI[pos.y][pos.x] = true;
+  DamageShips[pos.y][pos.x] = true;
+}

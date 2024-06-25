@@ -3,6 +3,7 @@
  * LAST UPDATE: 20.06.2024
  * PURPOSE    : AI step file.
  */
+
 /* Arrays: steps and posible steps */
 let Steps = [];
 let free = [];
@@ -27,15 +28,3 @@ function AIDamage(coords, mes) {
     hitArray[0] = vec2(coords.x, coords.y);
   }
 } /* End of "AIDamage" function */
-
-/*  */
-// function FieldAI() {
-//     let i, j;
-
-//     for (i = 0; i < 10; i++) {
-//         for (j = 0; j < 10; j++)
-//             {
-//                 free[i][j] =
-//             }
-//     }
-// }

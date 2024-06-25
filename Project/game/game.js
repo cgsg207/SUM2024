@@ -4,6 +4,17 @@
  * PURPOSE    : Game process file.
  */
 
+let DamageShips = [];
+function CreateDamage() {
+  let i, j;
+
+  for (i = 0; i < 10; i++) {
+    for (j = 0; j < 10; j++) {
+      DamageShips[i][j] = false;
+    }
+  }
+}
+
 /* Start game function */
 function gameStart() {
   AIStart();
@@ -13,7 +24,8 @@ function gameStart() {
 /* Game process function */
 function gameStep() {
   /* while (....)
-    .... */
+    ....
+  while (*/
 }
 
 /* End of game*/

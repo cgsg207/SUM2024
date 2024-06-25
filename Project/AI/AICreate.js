@@ -5,7 +5,7 @@
  */
 
 /* Coords which free for ships */
-let freePlace = [];
+let freePlaceAI = [];
 /* For 1 point ships */
 let Ships1AI = [];
 let len1AI = 0;
@@ -318,4 +318,4 @@ function CreateShips() {
 export function AIStart() {
   FreePlace();
   CreateShips();
-    } /* End of "AIStart" function */
+} /* End of "AIStart" function */

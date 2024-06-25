@@ -1,29 +1,27 @@
-import { green } from "color-name";
-
 let canvas, gl, timeLoc;
 
-let r = 1.0;
-let g = 1.0;
-let b = 1.0;
+// let r = 1.0;
+// let g = 1.0;
+// let b = 1.0;
 let timer;
 
-function keyboard(event) {
-  if (event.key == "p") {
-    timer.isPause = !timer.isPause;
-  }
-  if (event.key == "c") {
-    r = 0.6;
-    g = 0.6;
-    b = 0.6;
-  }
-}
+// function keyboard(event) {
+//   if (event.key == "p") {
+//     timer.isPause = !timer.isPause;
+//   }
+//   if (event.key == "c") {
+//     r = 0.6;
+//     g = 0.6;
+//     b = 0.6;
+//   }
+// }
 
 // OpenGL initialization function
 export function initGL() {
   canvas = document.getElementById("myCan");
   // body = document.getElementById("body");
 
-  canvas.addEventListener("keypress", keyboard);
+  // canvas.addEventListener("keypress", keyboard);
 
   timer = new Timer();
 
@@ -37,9 +35,6 @@ export function initGL() {
        
   out vec2 DrawPos;
   uniform float Time;
-  uniform float r;
-  uniform float g;
-  uniform float b;
  
   void main( void )
   {
@@ -53,9 +48,6 @@ export function initGL() {
   
     in vec2 DrawPos;
     uniform float Time;
-    uniform float r;
-    uniform float g;
-    uniform float b;
  
   void main( void )
   {
@@ -74,7 +66,7 @@ export function initGL() {
     OutColor.g = n / 255.0;
     OutColor.b = n / 255.0;
     
-    OutColor = OutColor + vec4(r, g, b, 1.0);
+    OutColor = OutColor + vec4(0.7, 0.8, 0.9, 1.0);
   }`;
 
   let vs = loadShader(gl.VERTEX_SHADER, vs_txt),
@@ -117,9 +109,9 @@ export function initGL() {
 
   // Uniform data
   timeLoc = gl.getUniformLocation(prg, "Time");
-  redLoc = gl.getUniformLocation(prg, "r");
-  greenLoc = gl.getUniformLocation(prg, "g");
-  blueLoc = gl.getUniformLocation(prg, "b");
+  // redLoc = gl.getUniformLocation(prg, "r");
+  // greenLoc = gl.getUniformLocation(prg, "g");
+  // blueLoc = gl.getUniformLocation(prg, "b");
 
   // rgb = gl.getUniformLocation(prg, "color");
 
@@ -150,15 +142,15 @@ export function render() {
     gl.uniform1f(timeLoc, timer.localTime);
   }
 
-  if (redLoc != -1) {
-    gl.uniform1f(redLoc, r);
-  }
-  if (greenLoc != -1) {
-    gl.uniform1f(greenLoc, g);
-  }
-  if (blueLoc != -1) {
-    gl.uniform1f(blueLoc, b);
-  }
+  // if (redLoc != -1) {
+  //   gl.uniform1f(redLoc, r);
+  // }
+  // if (greenLoc != -1) {
+  //   gl.uniform1f(greenLoc, g);
+  // }
+  // if (blueLoc != -1) {
+  //   gl.uniform1f(blueLoc, b);
+  // }
   gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
 } // End of 'render' function
 
@@ -214,4 +206,4 @@ export function Timer() {
   return this;
 } // End of 'Timer' function
 
-console.log("FRACTAL");
+console.log(`number: %d`, Math.random() * 9);
