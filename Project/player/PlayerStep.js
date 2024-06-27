@@ -6,6 +6,7 @@ let Damage3 = [[]];
 let Damage4 = [];
 let zone = [];
 let DamageShips = [[]];
+
 function CreateSteps() {
   let i, j;
 
@@ -62,9 +63,9 @@ function PlayerStep() {
 function FindAIShip(pos) {
   let i, j;
 
-  for (i = 0; i < coordsPlayer.length; i++) {
-    for (j = 0; j < coordsPlayer[i].length; j++) {
-      if (coordsPlayer[i][j] == pos) {
+  for (i = 0; i < coordsAI.length; i++) {
+    for (j = 0; j < coordsAI[i].length; j++) {
+      if (coordsAI[i][j] == pos) {
         return vec2(j, i);
       }
     }
@@ -122,10 +123,10 @@ function FindInArray(pos, array) {
 
   for (i = 0; i < array.lenth; i++) {
     for (j = 0; j < array[i].length; i++) {
-      if (array[i][j] == pos) return true;
+      if (array[i][j] == pos) return vec2(i, j);
     }
   }
-  return false;
+  return -1;
 }
 
 function createzone(array) {

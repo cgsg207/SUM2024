@@ -41,7 +41,7 @@ function CreateAIArraysToStep() {
   }
   // look for 2 or 3 point ship
   for (i = 0; i < 10; i++) {
-    if (i % 4 == 02) {
+    if (i % 4 == 2) {
       StepsFind32.push(vec2(i, 1));
       StepsFind32.push(vec2(i, 5));
       StepsFind32.push(vec2(i, 9));

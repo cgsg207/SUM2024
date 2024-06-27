@@ -40,7 +40,7 @@ function CheckPlace(xc, yc, len) {
   nyc = yc - 1;
   for (i = 0, j = 0; i < 3; i++) {
     while (j < len + 2)
-      if (freePlace[nyc + j][nxc + i] == false) {
+      if (freePlaceAI[nyc + j][nxc + i] == false) {
         array[0] = 0;
         break;
       }
@@ -48,7 +48,7 @@ function CheckPlace(xc, yc, len) {
 
   for (i = 0, j = 0; i < 3; i++) {
     while (j < len + 2)
-      if (freePlace[nyc + i][nxc + j] == false) {
+      if (freePlaceAI[nyc + i][nxc + j] == false) {
         array[1] = 0;
         break;
       }
@@ -59,7 +59,7 @@ function CheckPlace(xc, yc, len) {
 
   for (i = 0, j = 0; i < 3; i++) {
     while (j < len + 2)
-      if (freePlace[nyc - i][nxc - j] == false) {
+      if (freePlaceAI[nyc - i][nxc - j] == false) {
         array[2] = 0;
         break;
       }
@@ -67,7 +67,7 @@ function CheckPlace(xc, yc, len) {
 
   for (i = 0, j = 0; i < 3; i++) {
     while (j < len + 2)
-      if (freePlace[nyc - j][nxc - i] == false) {
+      if (freePlaceAI[nyc - j][nxc - i] == false) {
         array[3] = 0;
         break;
       }
@@ -88,7 +88,7 @@ function CreateCoords1(xc, yc) {
   /* Set coordinates for ship */
   Ships1AI[len1AI] = vec2(xc, yc);
   /* Change free positions */
-  freePlace[xc][yc] = false;
+  freePlaceAI[xc][yc] = false;
 
   /* Add ship`s coords to global array */
   for (i = 0; i < 4; i++) coordsAI[0][len1AI] = Ships1AI[len1AI];
@@ -130,7 +130,7 @@ function CreateCoords2(xc, yc, num) {
   }
   /* Change free positions */
   for (i = 0; i < 3; i++)
-    freePlace[Ships2AI[len2AI][i].y][Ships2AI[len2AI][i].x] = false;
+    freePlaceAI[Ships2AI[len2AI][i].y][Ships2AI[len2AI][i].x] = false;
 
   /* Add ship`s coords to global array */
   for (i = 0; i < 3; i++) coordsAI[2].push(Ships2AI[len2AI][i]);
@@ -172,7 +172,7 @@ function CreateCoords3(xc, yc, num) {
   }
   /* Change free positions */
   for (i = 0; i < 3; i++)
-    freePlace[Ships3AI[len3AI][i].y][Ships3AI[len3AI][i].x] = false;
+    freePlaceAI[Ships3AI[len3AI][i].y][Ships3AI[len3AI][i].x] = false;
 
   /* Add ship`s coords to global array */
   for (i = 0; i < 3; i++) coordsAI[2].push(Ships3AI[len3AI][i]);
@@ -217,7 +217,7 @@ function CreateCoords4(xc, yc, num) {
     Ship4AI[3] = vec2(xc - 3, yc);
   }
   /* Change free positions */
-  for (i = 0; i < 4; i++) freePlace[Ship4AI[i].y][Ship4AI[i].x] = false;
+  for (i = 0; i < 4; i++) freePlaceAI[Ship4AI[i].y][Ship4AI[i].x] = false;
 
   /* Add ship`s coords to global array */
   for (i = 0; i < 4; i++) coordsAI[3][i] = Ship4AI[i];
@@ -227,15 +227,15 @@ function CreateCoords4(xc, yc, num) {
  * ARGUMENTS: None.
  * RETURNS: None.
  */
-function FreePlace() {
+function freePlaceAI() {
   let i, j;
 
   for (i = 0; i < 10; i++) {
     for (j = 0; i < 10; j++) {
-      freePlace[i][j] = true;
+      freePlaceAI[i][j] = true;
     }
   }
-} /* End of "FreePlace" function */
+} /* End of "freePlaceAI" function */
 
 /* Generate arrays with AI ships function.
  * ARGUMENTS: None.
@@ -249,7 +249,7 @@ function CreateShips() {
     xc = Math.random() * 10;
     yc = Math.random() * 10;
 
-    if (freePlace[yc][xc] == true) {
+    if (freePlaceAI[yc][xc] == true) {
       CheckPlace(xc, yc, 4);
       if (array[0] == 1) mas.push(array[0]);
       else if (array[1] == 2) mas.push(array[1]);
@@ -266,7 +266,7 @@ function CreateShips() {
     xc = Math.random() * 10;
     yc = Math.random() * 10;
 
-    if (freePlace[yc][xc] == true) {
+    if (freePlaceAI[yc][xc] == true) {
       CheckPlace(xc, yc, 3);
       if (array[0] == 1) mas.push(array[0]);
       else if (array[1] == 2) mas.push(array[1]);
@@ -284,7 +284,7 @@ function CreateShips() {
     xc = Math.random() * 10;
     yc = Math.random() * 10;
 
-    if (freePlace[yc][xc] == true) {
+    if (freePlaceAI[yc][xc] == true) {
       CheckPlace(xc, yc, 2);
       if (array[0] == 1) mas.push(array[0]);
       else if (array[1] == 2) mas.push(array[1]);
@@ -302,7 +302,7 @@ function CreateShips() {
     xc = Math.random() * 10;
     yc = Math.random() * 10;
 
-    if (freePlace[yc][xc] == true) {
+    if (freePlaceAI[yc][xc] == true) {
       CheckPlace(xc, yc, 1);
       num = Math.random() * (mas.length + 1);
       CreateCoords1(xc, yc, mas[num]);
@@ -316,6 +316,6 @@ function CreateShips() {
  * RETURNS: None.
  */
 export function AIStart() {
-  FreePlace();
+  freePlaceAI();
   CreateShips();
 } /* End of "AIStart" function */
