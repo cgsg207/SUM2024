@@ -1,4 +1,4 @@
-export class _vec2 {
+class _vec2 {
   constructor(x, y) {
     if (x == undefined) {
       (this.x = 0), (this.y = 0);
@@ -17,6 +17,6 @@ export class _vec2 {
 }
 
 // Vec2 set function
-export function Vec2(...args) {
+export function vec2(...args) {
   return new _vec2(...args);
 } // End of 'vec2' function

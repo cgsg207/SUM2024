@@ -1,3 +1,10 @@
-canvas {
-  border: solid 3px rgb(33, 9, 245);
+#canvas1 {
+  width: 1009px;
+  height: 1009px;
+  border: 3px solid blue;
+}
+#canvas2 {
+  width: 1009px;
+  height: 1009px;
+  border: 3px solid blue;
 }
